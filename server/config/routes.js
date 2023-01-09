@@ -33,5 +33,5 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-
+  'POST /api/auth/register': 'auth/register',
 };
