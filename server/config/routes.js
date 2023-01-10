@@ -38,4 +38,6 @@ module.exports.routes = {
   'GET /api/auth/logout': 'auth/logout',
 
   'POST /api/users/profile': 'user/edit',
+  'GET /api/users/me': 'user/me',
+  'GET /api/users/:username': 'user/profile',
 };
