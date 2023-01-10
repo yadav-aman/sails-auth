@@ -17,6 +17,8 @@ module.exports.policies = {
   *                                                                          *
   ***************************************************************************/
 
-  // '*': true,
+  '*': 'isLoggedIn',
+  'auth/login': true,
+  'auth/register': true,
 
 };
