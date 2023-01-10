@@ -4,14 +4,13 @@
     "plugin:import/errors",
     "plugin:react/recommended",
     "plugin:jsx-a11y/recommended",
-    "plugin:tailwindcss/recommended",
     "prettier" // prettier always comes last
   ],
   "rules": {
     "react/prop-types": 0,
     "react/react-in-ksc-scope": 0
   },
-  "plugins": ["react", "import", "jsx-a11y", "tailwindcss"],
+  "plugins": ["react", "import", "jsx-a11y"],
   "parserOptions": {
     "ecmaVersion": 2022,
     "sourceType": "module",
