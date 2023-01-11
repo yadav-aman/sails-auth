@@ -8,8 +8,10 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useAuth } from "../contexts/auth";
 
 export const Profile = () => {
+  const { user } = useAuth();
   return (
     <Flex
       minH={"100vh"}
@@ -34,7 +36,7 @@ export const Profile = () => {
               objectFit="cover"
               boxSize="100%"
               borderRadius="3xl"
-              src="https://picsum.photos/200"
+              src={user.picture}
             />
           </Flex>
           <Stack
@@ -46,17 +48,17 @@ export const Profile = () => {
             pt={2}
           >
             <Heading fontSize={"2xl"} fontFamily={"body"}>
-              Name
+              {user.name}
             </Heading>
             <Text fontWeight={600} color={"gray.500"} size="sm" mb={4}>
-              @username
+              @{user.username}
             </Text>
             <Text
               textAlign={"center"}
               color={useColorModeValue("gray.700", "gray.400")}
               px={3}
             >
-              bio
+              {user.bio}
             </Text>
 
             {/* <Stack

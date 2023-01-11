@@ -1,5 +1,3 @@
-import React from "react";
-
 import {
   chakra,
   Flex,
@@ -7,12 +5,30 @@ import {
   HStack,
   Button,
   Heading,
+  useToast,
 } from "@chakra-ui/react";
 import { Fragment } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/auth";
 
 export const Navbar = ({ children }) => {
   const bg = useColorModeValue("white", "gray.800");
+  const { logout } = useAuth();
+  const toast = useToast();
+  const navigate = useNavigate();
+
+  const logoutHandler = async () => {
+    try {
+      await logout();
+      navigate("/login");
+    } catch (e) {
+      toast({
+        title: "An error occurred.",
+        description: e.message,
+        status: "error",
+      });
+    }
+  };
 
   return (
     <>
@@ -39,13 +55,14 @@ export const Navbar = ({ children }) => {
             </Flex>
             <HStack display="flex" alignItems="center" spacing={1}>
               <HStack spacing={1} mr={1} color="brand.500">
-                <Button colorScheme="blue" variant="outline">
-                  <Link to="/login">Sign in</Link>
-                </Button>
-                <Button colorScheme="blue" variant="outline">
-                  <Link to="/signup">Sign up</Link>
-                </Button>
-                <Button colorScheme="red" variant="outline">
+                {/* <Button colorScheme="teal" variant="outline">
+                  <Link to="/edit">Edit Profile</Link>
+                </Button> */}
+                <Button
+                  colorScheme="red"
+                  variant="outline"
+                  onClick={logoutHandler}
+                >
                   Sign out
                 </Button>
               </HStack>

@@ -12,33 +12,46 @@ import {
   Text,
   useColorModeValue,
   Divider,
+  chakra,
+  useToast,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
-import { API_BASE_URL } from "../utils/consts";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { GoogleAuth } from "./GoogleAuth";
+import { useAuth } from "../contexts/auth";
 
 export const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const { register, user } = useAuth();
+  const toast = useToast();
+
+  if (user) {
+    return <Navigate to="/" replace />;
+  }
 
   const signupHandler = async (e) => {
     e.preventDefault();
-    const response = await fetch(`${API_BASE_URL}/api/auth/register`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ username, email, password }),
-    });
-    const data = await response.json();
-    console.log(data);
-    if (!response.ok) {
-      console.log(data.message);
-      return;
+    e.persist();
+    setIsLoading(true);
+    const formData = Object.fromEntries(
+      new FormData(e.currentTarget).entries()
+    );
+    try {
+      await register(
+        formData.username.toString(),
+        formData.email.toString(),
+        formData.password.toString()
+      );
+    } catch (e) {
+      toast({
+        title: "An error occurred.",
+        description: e.message,
+        status: "error",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -62,56 +75,59 @@ export const Signup = () => {
           p={8}
         >
           <Stack spacing={4}>
-            <FormControl id="username" isRequired>
-              <FormLabel>Username</FormLabel>
-              <Input
-                type="text"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </FormControl>
-            <FormControl id="email" isRequired>
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" onChange={(e) => setEmail(e.target.value)} />
-            </FormControl>
-            <FormControl id="password" isRequired>
-              <FormLabel>Password</FormLabel>
-              <InputGroup onChange={(e) => setPassword(e.target.value)}>
-                <Input type={showPassword ? "text" : "password"} />
-                <InputRightElement h={"full"}>
-                  <Button
-                    variant={"ghost"}
-                    onClick={() =>
-                      setShowPassword((showPassword) => !showPassword)
-                    }
-                  >
-                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                  </Button>
-                </InputRightElement>
-              </InputGroup>
-            </FormControl>
-            <Stack spacing={10} pt={2}>
-              <Button
-                loadingText="Submitting"
-                size="lg"
-                bg={"blue.400"}
-                color={"white"}
-                _hover={{
-                  bg: "blue.500",
-                }}
-                type="submit"
-                onClick={signupHandler}
-              >
-                Sign up
-              </Button>
-            </Stack>
-            <Stack pt={1}>
-              <Stack direction={["row"]} justify="center">
-                <Text>Already a user?</Text>
-                <Link to="/login">
-                  <Text color={"blue.400"}>Login</Text>
-                </Link>
+            <chakra.form onSubmit={signupHandler}>
+              <FormControl isRequired>
+                <FormLabel htmlFor="username">Username</FormLabel>
+                <Input id="username" name="username" type="text" />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="email">Email address</FormLabel>
+                <Input id="email" name="email" type="email" />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="password">Password</FormLabel>
+                <InputGroup>
+                  <Input
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                  />
+                  <InputRightElement h={"full"}>
+                    <Button
+                      variant={"ghost"}
+                      onClick={() =>
+                        setShowPassword((showPassword) => !showPassword)
+                      }
+                    >
+                      {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                    </Button>
+                  </InputRightElement>
+                </InputGroup>
+              </FormControl>
+              <Stack spacing={10} pt={2}>
+                <Button
+                  loadingText="Submitting"
+                  size="lg"
+                  bg={"blue.400"}
+                  color={"white"}
+                  _hover={{
+                    bg: "blue.500",
+                  }}
+                  type="submit"
+                  isLoading={isLoading}
+                >
+                  Sign up
+                </Button>
               </Stack>
-            </Stack>
+              <Stack pt={1}>
+                <Stack direction={["row"]} justify="center">
+                  <Text>Already a user?</Text>
+                  <Link to="/login">
+                    <Text color={"blue.400"}>Login</Text>
+                  </Link>
+                </Stack>
+              </Stack>
+            </chakra.form>
           </Stack>
           <Stack py={2}>
             <Flex align="center">

@@ -1,18 +1,25 @@
-import { Flex, useColorModeValue, Stack } from "@chakra-ui/react";
+import { useColorModeValue, Stack } from "@chakra-ui/react";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../contexts/auth";
 import { EditProfile } from "./EditProfile";
 import { Navbar } from "./Navbar";
 import { Profile } from "./Profile";
 
 export const Home = () => {
-  return (
-    <Navbar>
-      <Stack
-        direction={["column", "row"]}
-        bg={useColorModeValue("gray.50", "gray.800")}
-      >
-        <Profile />
-        <EditProfile />
-      </Stack>
-    </Navbar>
-  );
+  const { user } = useAuth();
+  if (user) {
+    return (
+      <Navbar>
+        <Stack
+          direction={["column", "row"]}
+          bg={useColorModeValue("gray.50", "gray.800")}
+        >
+          <Profile />
+          <EditProfile />
+        </Stack>
+      </Navbar>
+    );
+  } else {
+    <Navigate to="/login" replace />;
+  }
 };
