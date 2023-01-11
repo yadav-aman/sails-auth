@@ -46,7 +46,7 @@ module.exports = {
       // store user id in session
       this.req.session.userId = newUser.id;
 
-      return exits.success({ message: 'User created successfully' });
+      return exits.success(newUser);
     } catch (e) {
       if (e.code === 'E_UNIQUE') {
         if (e.attrNames.includes('email')) {

@@ -34,7 +34,7 @@ module.exports = {
     },
     picture: {
       type: 'string',
-      defaultsTo: 'default.png',
+      defaultsTo: 'https://api.dicebear.com/5.x/identicon/svg',
     },
     bio: {
       type: 'string',

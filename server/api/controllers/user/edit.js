@@ -38,12 +38,12 @@ module.exports = {
       const userId = this.req.session.userId;
 
       // update profile
-      await User.updateOne({ id: userId }).set({
+      const user = await User.updateOne({ id: userId }).set({
         name: inputs.name,
         bio: inputs.bio,
         picture: inputs.picture,
       });
-      return exits.success({ message: 'Profile updated successfully' });
+      return exits.success(user);
     } catch (e) {
       sails.log.error(e);
       return exits.error({ message: 'Something went wrong' });

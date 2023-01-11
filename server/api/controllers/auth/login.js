@@ -53,7 +53,7 @@ module.exports = {
       // store user id in session
       this.req.session.userId = user.id;
 
-      return exits.success({ message: 'Logged in successfully' });
+      return exits.success(user);
     } catch (e) {
       throw e;
     }
