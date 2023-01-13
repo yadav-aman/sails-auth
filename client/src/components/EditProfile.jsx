@@ -23,6 +23,7 @@ export const EditProfile = () => {
     );
     try {
       await editProfile(
+        formData.username.toString(),
         formData.name.toString(),
         formData.bio.toString(),
         formData.picture.toString()
@@ -62,6 +63,18 @@ export const EditProfile = () => {
           Edit Your Profile
         </Heading>
         <chakra.form onSubmit={handleSubmit}>
+          <FormControl id="username">
+            <FormLabel>Username</FormLabel>
+            <Stack direction={["column", "row"]} spacing={2}>
+              <Input
+                placeholder="Username"
+                _placeholder={{ color: "gray.500" }}
+                type="text"
+                defaultValue={user.username}
+                name="username"
+              />
+            </Stack>
+          </FormControl>
           <FormControl id="name">
             <FormLabel>Full Name</FormLabel>
             <Stack direction={["column", "row"]} spacing={2}>

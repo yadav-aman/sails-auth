@@ -16,6 +16,9 @@ module.exports = {
     },
     picture: {
       type: 'string',
+    },
+    username: {
+      type: 'string',
     }
   },
 
@@ -24,6 +27,10 @@ module.exports = {
     success: {
       statusCode: 200,
       description: 'Profile updated successfully',
+    },
+    usernameAlreadyInUse: {
+      statusCode: 409,
+      description: 'Username already in use',
     },
     error: {
       statusCode: 500,
@@ -37,8 +44,18 @@ module.exports = {
       // Get the user id from the session.
       const userId = this.req.session.userId;
 
+      const existingUser = await User.findOne({
+        username: inputs.username,
+      });
+
+      if(existingUser && existingUser.id !== userId){
+        return exits.usernameAlreadyInUse({ message: 'Username already in use' });
+      }
+
+
       // update profile
       const user = await User.updateOne({ id: userId }).set({
+        username: inputs.username,
         name: inputs.name,
         bio: inputs.bio,
         picture: inputs.picture,

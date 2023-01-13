@@ -8,10 +8,9 @@ module.exports = {
 
 
   inputs: {
-    email: {
+    emailOrUsername: {
       type: 'string',
       required: true,
-      isEmail: true,
     },
     password: {
       type: 'string',
@@ -37,9 +36,21 @@ module.exports = {
 
 
   fn: async function (inputs, exits) {
-    const { email, password } = inputs;
+    const { emailOrUsername, password } = inputs;
     try {
-      const user = await User.findOne({ email: email.toLowerCase() });
+      // const sqlQuery = `SELECT * FROM users WHERE users.email = $1 OR users.username = $1`;
+      // const user = await sails.sendNativeQuery(sqlQuery, [emailOrUsername.toLowerCase()]);
+      // if (!user.rows.length) {
+      //   return exits.invalid({ message: 'User not found' });
+      // }
+      const user = await User.findOne({
+        or: [{
+          email: emailOrUsername.toLowerCase(),
+        },
+        {
+          username: emailOrUsername.toLowerCase()
+        }]
+      });
       if (!user) {
         return exits.invalid({ message: 'User not found' });
       }

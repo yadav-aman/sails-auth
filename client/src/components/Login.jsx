@@ -36,7 +36,10 @@ export const Login = () => {
       new FormData(e.currentTarget).entries()
     );
     try {
-      await login(formData.email.toString(), formData.password.toString());
+      await login(
+        formData.emailOrUsername.toString(),
+        formData.password.toString()
+      );
       navigate("/");
     } catch (e) {
       toast({
@@ -68,9 +71,9 @@ export const Login = () => {
         >
           <Stack spacing={4}>
             <chakra.form onSubmit={loginHandler}>
-              <FormControl id="email" isRequired>
-                <FormLabel>Email address</FormLabel>
-                <Input name="email" type="email" />
+              <FormControl id="emailOrUsername" isRequired>
+                <FormLabel>Email or Username</FormLabel>
+                <Input name="emailOrUsername" type="text" />
               </FormControl>
               <FormControl id="password" isRequired>
                 <FormLabel>Password</FormLabel>

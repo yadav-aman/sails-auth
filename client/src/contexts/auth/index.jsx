@@ -41,14 +41,14 @@ export const AuthProvider = ({ children }) => {
       }
       setUser(null);
     },
-    login: async (email, password) => {
+    login: async (emailOrUsername, password) => {
       const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ emailOrUsername, password }),
       });
       const data = await response.json();
       if (!response.ok) {
@@ -94,18 +94,18 @@ export const AuthProvider = ({ children }) => {
       },
       auto_select: true,
     }),
-    editProfile: async (name, bio, picture) => {
+    editProfile: async (username, name, bio, picture) => {
       const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ name, bio, picture }),
+        body: JSON.stringify({ username, name, bio, picture }),
       });
       const data = await response.json();
       if (!response.ok) {
-        throw new Error("Something went wrong");
+        throw new Error(data.message);
       }
       setUser(data);
     },
