@@ -37,6 +37,7 @@ export const Profile = () => {
               boxSize="100%"
               borderRadius="3xl"
               src={user.picture}
+              fallbackSrc="https://api.dicebear.com/5.x/identicon/svg?seed=aman"
             />
           </Flex>
           <Stack
