@@ -1,7 +1,7 @@
 import { Center, Spinner } from "@chakra-ui/react";
-import { useCallback } from "react";
 import { useEffect, useContext, createContext, useState } from "react";
 import { API_BASE_URL } from "../../utils/consts";
+import { useGoogleLogin } from "@react-oauth/google";
 
 const AuthContext = createContext(null);
 
@@ -71,6 +71,29 @@ export const AuthProvider = ({ children }) => {
       }
       setUser(data);
     },
+    googleAuth: useGoogleLogin({
+      flow: "auth-code",
+      onSuccess: async (response) => {
+        const { code } = response;
+        const res = await fetch(`${API_BASE_URL}/api/auth/google`, {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ code }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          throw new Error(data.message);
+        }
+        setUser(data);
+      },
+      onError: (error) => {
+        console.log(error);
+      },
+      auto_select: true,
+    }),
     editProfile: async (name, bio, picture) => {
       const response = await fetch(`${API_BASE_URL}/api/users/profile`, {
         method: "POST",

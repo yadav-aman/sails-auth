@@ -36,6 +36,7 @@ module.exports.routes = {
   'POST /api/auth/register': 'auth/register',
   'POST /api/auth/login': 'auth/login',
   'GET /api/auth/logout': 'auth/logout',
+  'POST /api/auth/google': 'auth/google',
 
   'POST /api/users/profile': 'user/edit',
   'GET /api/users/me': 'user/me',

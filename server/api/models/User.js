@@ -29,7 +29,6 @@ module.exports = {
     },
     password: {
       type: 'string',
-      required: true,
       minLength: 6,
     },
     picture: {
@@ -46,7 +45,9 @@ module.exports = {
       valuesToSet.email = valuesToSet.email.toLowerCase();
       valuesToSet.username = valuesToSet.username.toLowerCase();
       // Hash password
-      valuesToSet.password = await sails.helpers.passwords.hashPassword(valuesToSet.password);
+      if(valuesToSet.password){
+        valuesToSet.password = await sails.helpers.passwords.hashPassword(valuesToSet.password);
+      }
       return proceed();
     } catch (err) {
       return proceed(err);

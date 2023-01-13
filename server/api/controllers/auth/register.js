@@ -39,6 +39,10 @@ module.exports = {
 
   fn: async function (inputs, exits) {
     try {
+      const { username, email, password } = inputs;
+      if(!username || !email || !password) {
+        return exits.invalid({ message: 'Invalid inputs' });
+      }
       const newUser = await User.create(inputs).intercept('E_UINQUE', 'userExist').fetch();
 
       sails.log.info(`User: ${newUser.email} created with user id ${newUser.id}`);

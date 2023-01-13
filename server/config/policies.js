@@ -20,5 +20,6 @@ module.exports.policies = {
   '*': 'isLoggedIn',
   'auth/login': true,
   'auth/register': true,
-  'user/profile': true
+  'auth/google': true,
+  'user/profile': true,
 };
