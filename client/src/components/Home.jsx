@@ -14,7 +14,7 @@ export const Home = () => {
           direction={["column", "row"]}
           bg={useColorModeValue("gray.50", "gray.800")}
         >
-          <Profile />
+          <Profile user={user} />
           <EditProfile />
         </Stack>
       </Navbar>

@@ -8,10 +8,8 @@ import {
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-import { useAuth } from "../contexts/auth";
 
-export const Profile = () => {
-  const { user } = useAuth();
+export const Profile = ({ user }) => {
   return (
     <Flex
       minH={"100vh"}
@@ -37,7 +35,8 @@ export const Profile = () => {
               boxSize="100%"
               borderRadius="3xl"
               src={user.picture}
-              fallbackSrc="https://api.dicebear.com/5.x/identicon/svg?seed=aman"
+              fallbackSrc={`https://api.dicebear.com/5.x/identicon/svg?seed=${user.username}}`}
+              referrerPolicy="no-referrer"
             />
           </Flex>
           <Stack
