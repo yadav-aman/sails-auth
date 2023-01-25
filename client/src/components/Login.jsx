@@ -23,6 +23,8 @@ export const Login = () => {
   const { login, user } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
+  const colorBg = useColorModeValue("gray.50", "gray.800");
+  const colorBox = useColorModeValue("white", "gray.700");
 
   if (user) {
     return <Navigate to="/" replace />;
@@ -53,22 +55,12 @@ export const Login = () => {
   };
 
   return (
-    <Flex
-      minH={"100vh"}
-      align={"center"}
-      justify={"center"}
-      bg={useColorModeValue("gray.50", "gray.800")}
-    >
+    <Flex minH={"100vh"} align={"center"} justify={"center"} bg={colorBg}>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Sign in to your account</Heading>
         </Stack>
-        <Box
-          rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
-          p={8}
-        >
+        <Box rounded={"lg"} bg={colorBox} boxShadow={"lg"} p={8}>
           <Stack spacing={4}>
             <chakra.form onSubmit={loginHandler}>
               <FormControl id="emailOrUsername" isRequired>
@@ -103,7 +95,7 @@ export const Login = () => {
               </Stack>
               <Stack pt={1}>
                 <Stack direction={["row"]} justify="center">
-                  <Text>Don't have an account?</Text>
+                  <Text>Don&apos;t have an account?</Text>
                   <Link to="/signup">
                     <Text color={"blue.400"}>Sign Up</Text>
                   </Link>

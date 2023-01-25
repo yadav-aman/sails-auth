@@ -7,13 +7,11 @@ import { Profile } from "./Profile";
 
 export const Home = () => {
   const { user } = useAuth();
+  const color = useColorModeValue("gray.50", "gray.800");
   if (user) {
     return (
       <Navbar>
-        <Stack
-          direction={["column", "row"]}
-          bg={useColorModeValue("gray.50", "gray.800")}
-        >
+        <Stack direction={["column", "row"]} bg={color}>
           <Profile user={user} />
           <EditProfile />
         </Stack>
