@@ -1,9 +1,11 @@
 {
   "extends": [
-    "eslint:recommend",
+    "eslint:recommended",
     "plugin:import/errors",
     "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
     "plugin:jsx-a11y/recommended",
+    "plugin:react-hooks/recommended",
     "prettier" // prettier always comes last
   ],
   "rules": {
