@@ -26,7 +26,7 @@ module.exports = {
   fn: async function (inputs, exits) {
     try {
       const username = this.req.param('username');
-      const user = await User.findOne({ username: username });
+      const user = await sails.helpers.cacheRead(username);
       if (!user) {
         return exits.notFound({ message: 'User not found.' });
       }

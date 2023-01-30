@@ -52,6 +52,8 @@ module.exports.datastores = {
     url: 'mysql://root:aman123@127.0.0.1:3306/sailsauth',
 
   },
-
-
+  redis: {
+    adapter: 'sails-redis',
+    url: 'redis://localhost:6379',
+  }
 };

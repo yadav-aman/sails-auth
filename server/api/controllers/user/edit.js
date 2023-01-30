@@ -48,7 +48,7 @@ module.exports = {
         username: inputs.username,
       });
 
-      if(existingUser && existingUser.id !== userId){
+      if (existingUser && existingUser.id !== userId) {
         return exits.usernameAlreadyInUse({ message: 'Username already in use' });
       }
 
@@ -60,6 +60,7 @@ module.exports = {
         bio: inputs.bio,
         picture: inputs.picture,
       });
+      await sails.helpers.cacheWrite(user.username, JSON.stringify(user));
       return exits.success(user);
     } catch (e) {
       sails.log.error(e);
