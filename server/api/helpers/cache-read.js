@@ -35,10 +35,10 @@ module.exports = {
         }
         // update the cache
         await sails.helpers.cacheWrite(inputs.key, JSON.stringify(user));
-        return user;
+        return JSON.stringify(user);
       } else {
         sails.log.info('cache hit', inputs);
-        return JSON.parse(found);
+        return found;
       }
     });
     return data;

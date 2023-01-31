@@ -30,7 +30,7 @@ module.exports = {
       if (!user) {
         return exits.notFound({ message: 'User not found.' });
       }
-      return exits.success(user);
+      return exits.success(JSON.parse(user));
     } catch (e) {
       sails.log.error(e);
       return exits.error({ message: 'Something went wrong.' });
