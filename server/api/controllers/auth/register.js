@@ -40,7 +40,7 @@ module.exports = {
   fn: async function (inputs, exits) {
     try {
       const { username, email, password } = inputs;
-      if(!username || !email || !password) {
+      if (!username || !email || !password) {
         return exits.invalid({ message: 'Invalid inputs' });
       }
       const newUser = await User.create(inputs).intercept('E_UINQUE', 'userExist').fetch();
@@ -63,9 +63,11 @@ module.exports = {
           return exits.userExist({ message: 'Username already taken' });
         }
       } else if (e.code === 'E_INVALID_NEW_RECORD') {
-        return exits.invalid({ error: 'password too short' });
+        sails.log.error('Invalid inputs');
+        return exits.invalid({ message: 'Invalid inputs' });
       }
-      return exits.invalid({ message: e });
+      sails.log.error(e);
+      return exits.invalid({ message: 'Something unexpected happened' });
     }
   }
 

@@ -20,7 +20,8 @@ module.exports = {
       type: 'string',
       required: true,
       unique: true,
-      isEmail: true,
+      regex: /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,
+
     },
     username: {
       type: 'string',
@@ -45,7 +46,7 @@ module.exports = {
       valuesToSet.email = valuesToSet.email.toLowerCase();
       valuesToSet.username = valuesToSet.username.toLowerCase();
       // Hash password
-      if(valuesToSet.password){
+      if (valuesToSet.password) {
         valuesToSet.password = await sails.helpers.passwords.hashPassword(valuesToSet.password);
       }
       return proceed();
