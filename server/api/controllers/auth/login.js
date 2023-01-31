@@ -58,6 +58,7 @@ module.exports = {
       try {
         await sails.helpers.passwords.checkPassword(password, user.password);
       } catch (e) {
+        sails.log.error(e);
         return exits.invalid({ message: 'Invalid password' });
       }
 
