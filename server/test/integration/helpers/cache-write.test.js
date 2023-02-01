@@ -16,4 +16,9 @@ describe('Write Cache', () => {
     const value2 = await sails.helpers.cacheRead('unit_test-key');
     assert.equal(value2, undefined);
   });
+
+  after(async () => {
+    await sails.helpers.cacheWrite('unit_test-key-inf', 'test', 1);
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  });
 });

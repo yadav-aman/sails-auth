@@ -11,7 +11,6 @@ module.exports = {
     email: {
       type: 'string',
       required: true,
-      isEmail: true,
     },
 
     password: {
@@ -62,7 +61,7 @@ module.exports = {
           sails.log.error(`Username: ${inputs.username} already taken`);
           return exits.userExist({ message: 'Username already taken' });
         }
-      } else if (e.code === 'E_INVALID_NEW_RECORD') {
+      } else if (e.code === 'E_INVALID_NEW_RECORD' || e.code === 'E_MISSING_OR_INVALID_PARAMS') {
         sails.log.error('Invalid inputs');
         return exits.invalid({ message: 'Invalid inputs' });
       }
